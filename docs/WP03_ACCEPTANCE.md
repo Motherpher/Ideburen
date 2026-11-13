@@ -7,7 +7,7 @@
 | Source, publication, study family identity separated | `publication_registry_v1.csv`, `study_family_registry_v1.csv` | IMPLEMENTED |
 | Data-period/year and geography carried with publication | Publication registry columns | IMPLEMENTED WHERE KNOWN; blank if unknown |
 | HARP evidence and publication rights not conflated | Separate columns; review gates | IMPLEMENTED |
-| Source binary SHA-256 | Optional local tool, ledger not in public Git | TOOL IMPLEMENTED; ORIGINAL CHECKSUMS PENDING |
+| Source binary SHA-256 | Optional local tool, ledger not in public Git | 2 USER-UPLOADED XLSX SHA-256 VERIFIED; OTHER ORIGINALS PENDING |
 | Uniqueness and referential integrity | `ideburen.sources validate` and CI tests | IMPLEMENTED, CI TO VERIFY |
 | No false independent studies from editions/appendices | Värmland 2023 and Sörmland 2023 group validation | IMPLEMENTED |
 | Source contents fully audited | Requires authorized original reads and RefA | NOT DONE — FOLLOW-UP |

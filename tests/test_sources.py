@@ -8,7 +8,7 @@ def test_source_catalog_integrity():
     assert summary["source_records"]>=40
     assert summary["publication_records"]>=30
     assert summary["legacy_sources_covered"]>=10
-    assert summary["binary_checksums_computed"]==0
+    assert summary["binary_checksums_computed"]==2
     assert summary["harp_refa_publication_gate"]=="NOT_APPROVED"
 
 def test_editions_deduplicate_to_common_study():

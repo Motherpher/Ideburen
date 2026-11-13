@@ -35,3 +35,6 @@ The checksum operation records filename, file size and SHA-256 outside the publi
 Collect original source bytes through authorized access, record original-page evidentiary citations and complete ITR1/ITR2/ITR4/ITR5/ITR6 for each public-facing claim. Require rights determination, author/date and methodological comparability check. Source `mchs_119_2025` remains the existing Uppsala 2022 observation's source. Missing or duplicate sources must trigger QA failures, never silently become zero.
 
 **WP03 acceptance:** Every registered seed has a unique source-ID, bibliographic reference, provenance note, archive/checksum status and source quality state; all publications link to registered sources and study families. The documented original-file checksum coverage remains outstanding until authorized files are audited.
+
+## Checked local seed-file binaries
+The two user-uploaded XLSX input copies were SHA-256 hashed on 2026-11-13 and their exact digests recorded in the public metadata only, without uploading their bytes. All remaining original file checksums are explicitly `not_computed`. A hash authenticates the particular bytes in hand, **not** their author, content accuracy, licensing, or the completeness of the underlying register.
