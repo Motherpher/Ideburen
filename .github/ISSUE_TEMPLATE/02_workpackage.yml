@@ -1,0 +1,33 @@
+name: Work package
+description: Implement a scoped WP with measurable gates and source lineage.
+title: "[WP] "
+labels: ["work-package"]
+body:
+  - type: input
+    id: id
+    attributes:
+      label: WP identifier and owner
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and upstream dependencies
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Inputs, access rights, canonical source links, data-year restrictions
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Acceptance criteria and measurable verification
+    validations:
+      required: true
+  - type: textarea
+    id: gates
+    attributes:
+      label: Blocking governance decisions and Director authorizations

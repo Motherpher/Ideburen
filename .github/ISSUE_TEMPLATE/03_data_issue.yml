@@ -1,0 +1,26 @@
+name: Data defect
+description: Report a reproducible data, method, provenance or GIS issue.
+title: "[DATA] "
+labels: ["data-quality"]
+body:
+  - type: input
+    id: dataset
+    attributes:
+      label: Dataset ID, version, municipality code / source ID
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction and observed vs expected result (without personal data)
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Affected geography, year, metric, method or publication
+  - type: dropdown
+    id: quality
+    attributes:
+      label: Impact on release
+      options: [blocking, needs_review, nonblocking]

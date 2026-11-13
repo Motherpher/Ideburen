@@ -1,0 +1,36 @@
+name: Source evidence and HARP audit
+description: Register a source, check provenance, method and publication rights.
+title: "[SOURCE] "
+labels: ["source", "needs-review"]
+body:
+  - type: input
+    id: source
+    attributes:
+      label: Source title and publisher
+    validations:
+      required: true
+  - type: input
+    id: uri
+    attributes:
+      label: Original source URL or restricted Drive reference (never access tokens)
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Data year, publication year, unit/population, geography, method, page/table
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: Evidence stage
+      options: [metadata_only, unverified, primary_verified, contradicted, unavailable]
+    validations:
+      required: true
+  - type: textarea
+    id: rights
+    attributes:
+      label: Provenance, license / reuse permission, personal data, remaining checks
+    validations:
+      required: true
