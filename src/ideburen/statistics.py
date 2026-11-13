@@ -196,7 +196,7 @@ def build(out, inventory=None):
         "geometry_included":False,"reference_year_geography":"2026_SCb_codes_not_2022_boundary",
         "publication_approved":False,
         "outputs":{p.name:_sha(p) for p in output.glob("*.csv")}}
-    (output/"manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    (output/"statistical_manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return manifest
 
 def main(argv=None):
