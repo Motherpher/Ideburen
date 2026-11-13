@@ -3,3 +3,7 @@ mchs_119_2025,Civilsamhället i Uppsala län,Marie Cederschiöld högskola,https
 seed_290,Ideburen kommuninventering 290,user-provided spreadsheet,,uploaded Excel 2026-11-13,internal_inventory,internal,
 seed_uppsala,Barnombudet föreningsregister och beslutskedjor,user-provided spreadsheet,,uploaded Excel 2026-11-13,internal_inventory,internal,
 geo_2025,Municipal archetype mapping 2025,user-provided geographic integration pack,,uploaded spreadsheet; official SCB-code cross-check pending,secondary_pending,internal,2025
+uppsala_policy_2025,Policy för samverkan med aktörer i civilsamhället,Uppsala kommun,,uploaded policy PDF 2025-09-08,primary_verified,public,2025
+uppsala_lok_pdf,Lokal överenskommelse Uppsala 2018–2023,Uppsala kommun,https://www.uppsala.se/contentassets/617cd7ff564242a5bb10112b34d32155/23-lokal-overenskommelse-mellan-uppsalas-foreningsliv-och-uppsala-kommun-2018-2023.pdf,public PDF,metadata_only,public,2018
+tierp_lok_2025,Lokal överenskommelse mellan Tierps kommun och civilsamhället,Tierps kommun,https://www.tierp.se/tierp.se/kommun-och-politik/dialog-och-forslag/samverkan-med-civilsamhallet.html,municipal website,metadata_only,public,2025
+osthammar_minutes_2020,Kultur och fritidsnämndens protokoll 2020-12-03,Östhammars kommun,https://www.osthammar.se/globalassets/dokument/moteshandlingar/kultur--och-fritidsnamnd/2020/protokoll-kfn-2020-12-03.pdf,municipal PDF,metadata_only,public,2020

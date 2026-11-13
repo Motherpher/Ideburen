@@ -1,0 +1,2 @@
+# Contributions
+Submit source suggestions with original document URL, publisher, publication year, observation period, geographic scope, source license and page/table number. Add every claim to its appropriate stage (metadata only, reviewed, publication cleared). Do not submit personal contact data, unlicensed PDFs or fabricated geodata. Director approves public releases and canonical schema changes.

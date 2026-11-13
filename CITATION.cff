@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "Please cite the specific underlying source and dataset version, not just this software."
+title: "Ideburen"
+type: software
+authors:
+  - name: Motherpher
+repository-code: "https://github.com/Motherpher/Ideburen"
+version: "0.1.0-dev"
+date-released: "2026-11-13"

@@ -1,0 +1,5 @@
+institution_id,jurisdiction_code,name,type,start_date,end_date,current_status,source_id,evidence_status
+uppsala_lok_2018,0380,Lokal överenskommelse Uppsala 2018–2023,LOK,2018,2023,superseded,uppsala_lok_pdf,metadata_only
+uppsala_policy_2025,0380,Policy för samverkan med aktörer i civilsamhället,policy,2025-09-08,,in_force,uppsala_policy_2025,primary_verified
+tierp_lok_2025,0360,Lokal överenskommelse Tierp reviderad 2025,LOK,2025,,in_force,tierp_lok_2025,metadata_only
+osthammar_2020,0382,Avsiktsförklaring om samverkan med civilsamhället,declaration,2020-12-03,,current_status_unverified,osthammar_minutes_2020,metadata_only

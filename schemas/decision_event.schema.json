@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DecisionEvent",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "event_id",
+    "institution_id",
+    "municipality_code",
+    "event_type",
+    "source_id",
+    "evidence_status"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "institution_id": {
+      "type": "string"
+    },
+    "municipality_code": {
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "event_type": {
+      "enum": [
+        "initiative",
+        "assignment",
+        "consultation",
+        "referral",
+        "officer_report",
+        "committee_decision",
+        "municipal_exec_decision",
+        "council_decision",
+        "implementation",
+        "follow_up",
+        "revision",
+        "termination"
+      ]
+    },
+    "date_or_period": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "evidence_status": {
+      "type": "string"
+    }
+  }
+}

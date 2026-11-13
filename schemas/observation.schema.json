@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Observation",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "municipality_code",
+    "metric_id",
+    "value_year",
+    "value",
+    "method_id",
+    "source_id",
+    "population",
+    "evidence_status"
+  ],
+  "properties": {
+    "municipality_code": {
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "metric_id": {
+      "type": "string"
+    },
+    "value_year": {
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "value": {
+      "type": [
+        "string",
+        "integer",
+        "number"
+      ]
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "method_id": {
+      "type": "string"
+    },
+    "population": {
+      "type": "string"
+    },
+    "evidence_status": {
+      "enum": [
+        "primary_verified",
+        "secondary_verified",
+        "metadata_only",
+        "unverified",
+        "contradicted",
+        "unavailable"
+      ]
+    }
+  }
+}
