@@ -16,3 +16,12 @@ jobs:
       - run: python -m pytest -q
       - run: python -m ideburen.cli build --out build
       - run: python -m ideburen.cli package --input build --out build/ideburen_tables.gpkg
+      - name: Upload QGIS attribute preview (NOT a spatial release)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ideburen-attributes-preview-not-cleared
+          path: |
+            build/*.csv
+            build/*.json
+            build/*.gpkg
+          retention-days: 30
