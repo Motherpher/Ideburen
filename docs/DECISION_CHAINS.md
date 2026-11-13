@@ -1,7 +1,7 @@
-# Decision chain pilot — Uppsala / Tierp / Östhammar
+# Decision-chain research index
 
-The tables `data/curated/institutions/seed_institutions.csv` and `data/curated/decisions/seed_decision_events.csv` contain a **research index**, not conclusive original-document audits. The source reference `uppsala_policy_2025` has verified document metadata; other entries remain `metadata_only` until a reviewer signs the HARP ITR2/5/6 checks.
+Canonical WP05 documentation: [Decision Engine](WP05_DECISION_ENGINE.md), [Uppsala and Tierp pilots](WP05_PILOTS.md), [Acceptance](WP05_ACCEPTANCE.md).
 
-To reconstruct full municipal decision chains: capture initiative/mandate, consultation participants, circulated drafts, responses, officer report, committee/KS/KF decisions, adopted policy, implementation and follow-up. Record diary number and paragraph and original-document URLs. Preserve contradictory dates rather than resolving by guesswork.
+The public seed institutions and source-index events in data/curated/decisions/seed_decision_events.csv are only a **discovery index**, not the full 27-row privately staged input. The canonical WP05 engine takes the full normalized WP04 local CSV and optionally raw institutional actor metadata. Do not confuse the six published seed index events with the 27 source events, or with 27 independently verified legal decisions.
 
-Planned next stage: append `decision_event_edges.csv` and `source_assertions.csv` for non-linear chains and page-specific evidence.
+A temporal predecessor is not a proved legal relationship. The graph distinguishes strict chronology, explicit source-audited process relationships, missing evidence requests, and normative requirements. An event described as verified in the seed remains unverified in WP05 until independently reviewed.

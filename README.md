@@ -31,3 +31,6 @@ See `docs/ARCHITECTURE.md`, `docs/HARP.md`, `docs/QGIS.md` and `docs/RELEASE_STA
 
 ## WP04 – reproducible spreadsheet ingest
 The canonical two-workbook inventory ingest is `python -m ideburen.wp04`; the earlier `ideburen.cli ingest` remains a legacy compatibility path and does **not** preserve all nine sheets. WP04 records all source rows locally, separates municipal profiles, supplements, historical association membership and decision-chain stages, and blocks false zero values or unknown municipality joins. All generated staging must remain private; **no original XLSX or raw row exports belong in Git**. See [WP04 acceptance](docs/WP04_ACCEPTANCE.md).
+
+## Decision Engine — WP05
+Source-traceable, non-causal institutional decision graphs are implemented in src/ideburen/decision_engine.py. Uppsala and Tierp pilots and review gaps: [WP05 pilots](docs/WP05_PILOTS.md). The canonical engine reads private WP04 outputs locally and produces GraphML/CSV cases, actors, document locators, chronological edges, uncertainty and review requests. [Specification](docs/WP05_DECISION_ENGINE.md) and [acceptance](docs/WP05_ACCEPTANCE.md). Original municipal decisions still require source-by-source HARP RefA audit; no legal-decision publication is authorized.

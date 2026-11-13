@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WP05 local event record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "case_id",
+    "municipality_code",
+    "source_row_id",
+    "source_id",
+    "event_type",
+    "claim_kind",
+    "evidence_status",
+    "primary_source_reaudited"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "pattern": "^evt_[a-f0-9]{16}$"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "municipality_code": {
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "source_row_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_id": {
+      "const": "seed_uppsala"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "claim_kind": {
+      "enum": [
+        "event_claim",
+        "normative_requirement",
+        "document_validity_period"
+      ]
+    },
+    "date_earliest": {
+      "type": "string"
+    },
+    "date_latest": {
+      "type": "string"
+    },
+    "evidence_status": {
+      "const": "seed_claim_not_primary_reaudited"
+    },
+    "primary_source_reaudited": {
+      "const": "false"
+    },
+    "legal_decision_confirmed": {
+      "const": "not_in_wp05"
+    },
+    "is_publication_cleared": {
+      "const": "false"
+    }
+  }
+}
