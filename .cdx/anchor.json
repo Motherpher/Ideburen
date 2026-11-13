@@ -1,0 +1,46 @@
+{
+  "schema": "cdx.anchor/v1",
+  "system_short_name": "CDX",
+  "governed_surface": {
+    "kind": "REPOSITORY",
+    "identity": "Motherpher/Ideburen",
+    "repository": "Motherpher/Ideburen",
+    "system_id": "IDEBUREN"
+  },
+  "cdx_authority": {
+    "repository": "Hybrismannen/Conductellence-",
+    "canonical_name": "Conductellence",
+    "short_name": "CDX"
+  },
+  "law_id": "CDX-LAW-001",
+  "binding_mode": "PINNED_RELEASE",
+  "policy_pin": {
+    "ref_type": "RELEASE",
+    "ref": "1.0.0",
+    "digest": "git-blob-sha1:55dbcdac2f822b59a5a5f0f19eeadfa61d2c7ed0"
+  },
+  "binding_state": "ANCHOR_DECLARED",
+  "authority_context": {
+    "authority_ref_required": true,
+    "mandate_ref_required": true
+  },
+  "local_enforcement": {
+    "owner": "Motherpher/Ideburen",
+    "points": [],
+    "fail_closed_for_consequential_effects": true
+  },
+  "conformance": {
+    "adapter_contract": "CDX-RUNTIME-001",
+    "runtime_state": "NOT_VERIFIED"
+  },
+  "evidence": {
+    "spetl_required": true,
+    "preservation_target": "PENDING_LOCAL_EVIDENCE_SURFACE",
+    "reconciliation_surface": "CDX_ESTATE_ADMISSION_PENDING_2026_11_13"
+  },
+  "verification": {
+    "last_verified_at": null,
+    "verification_state": "NOT_VERIFIED",
+    "verified_against": null
+  }
+}
