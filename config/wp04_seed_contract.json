@@ -1,0 +1,32 @@
+{
+  "wp": "WP04",
+  "reference_date": "2026-11-13",
+  "sources": [
+    {
+      "source_id": "seed_290",
+      "sha256": "dfb350f33a3c749988248ec8d5605ed58d89ac3b2abfb050367ab11d0a208d6e",
+      "expected_sheets": {
+        "Alla kommuner": 290,
+        "Kommunbilagor": 23,
+        "Viktiga källor": 5,
+        "Metod": 6
+      }
+    },
+    {
+      "source_id": "seed_uppsala",
+      "sha256": "2e83beefe157ba962f339d276de5f9d0792b24e678d89fa8af6d6205bf4d4d2a",
+      "expected_sheets": {
+        "Registerkällor": 8,
+        "Föreningar": 37,
+        "Beslutskedjor": 27,
+        "Begär ut": 16,
+        "Metod": 9
+      }
+    }
+  ],
+  "expected_rows": 421,
+  "strict_input_hashes_documented": true,
+  "verified_geography": "SCB 2026 municipality codes",
+  "data_release": "blocked",
+  "note": "Seed metadata and counts only; original worksheets and derived row-level staging are private and never automatically published."
+}

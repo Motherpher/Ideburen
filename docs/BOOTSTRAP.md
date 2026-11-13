@@ -19,9 +19,11 @@ Expected output: 21 counties, 290 distinct municipal codes, 8 Uppsala observatio
 To ingest *authorized* local seed XLSX, run:
 
 ```bash
-python -m ideburen.cli ingest --municipal /secure/municipal.xlsx --uppsala /secure/uppsala.xlsx --out build
+python -m ideburen.wp04 --municipal /secure/municipal.xlsx --uppsala /secure/uppsala.xlsx --out build/wp04
 ```
 
 Ingestion creates staging and exception reports, not verified facts. Inspect the reports before curation.
 
 CI: `.github/workflows/validate.yml` repeats the baseline checks on main and pull requests. It uploads a clearly marked nonspatial preview, not a public approved release. See `docs/RELEASE_STATUS.md` for gates.
+
+The canonical WP04 run stages **all nine source worksheets** under `build/wp04/`. This is not the same as the legacy CLI's 362-row selection. Keep the private `original_sheet_rows.jsonl`, `exceptions.csv` and all normalized records outside any release asset. Do not run WP04 against CI build output intended for public artifact publication.
