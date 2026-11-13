@@ -31,7 +31,8 @@
   },
   "conformance": {
     "adapter_contract": "CDX-RUNTIME-001",
-    "runtime_state": "NOT_VERIFIED"
+    "runtime_state": "NOT_VERIFIED",
+    "ci_workflow": ".github/workflows/cdx-anchor-audit.yml"
   },
   "evidence": {
     "spetl_required": true,
