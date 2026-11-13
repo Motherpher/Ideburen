@@ -28,7 +28,9 @@ def digest(path):
 def normalize(x):
     x=unicodedata.normalize("NFKD",str(x or "").casefold().strip())
     x="".join(c for c in x if not unicodedata.combining(c))
-    return re.sub(r"(s)? kommun$","",x).strip()
+    x=re.sub(r"^region ","",x)
+    x=re.sub(r"(s)? (kommun|stad)$","",x).strip()
+    return "falun" if x=="falu" else x
 
 def xlsx_rows(path):
     """Yield (sheet,row_number,{column:value}) using stdlib, without macros."""
@@ -96,7 +98,8 @@ def ingest(municipal,uppsala,out):
     lookup={}
     exact={}
     for r in read_csv(ROOT/"data/curated/dimensions/municipalities.csv"):
-        for alias in (r["municipality_name"],r["municipality_name"]+" kommun",r["municipality_name"]+"s kommun"):
+        for alias in (r["municipality_name"],r["municipality_name"]+" kommun",r["municipality_name"]+"s kommun",
+                      r["municipality_name"]+" stad",r["municipality_name"]+"s stad","Region "+r["municipality_name"]):
             lookup.setdefault(normalize(alias),set()).add(r["municipality_code"])
             exact.setdefault(alias.casefold().strip(),set()).add(r["municipality_code"])
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
