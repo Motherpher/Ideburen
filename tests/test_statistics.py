@@ -49,3 +49,41 @@ def test_private_inventory_not_promoted(tmp_path):
         w.writerow({"row_id":"x","municipality_code":"0380","organisation_count":"","count_status":"not_reported","source_id":"seed_290"})
     with pytest.raises(ValueError,match="290 distinct municipality"):
         s.build(tmp_path/"bad",p)
+
+
+def test_attribute_geopackage_numeric_and_nonspatial(tmp_path):
+    import sqlite3
+    from ideburen.cli import build as base_build, gpkg
+    folder=tmp_path/"work"
+    base_build(folder)
+    s.build(folder)
+    result=gpkg(folder,folder/"ideburen_tables.gpkg")
+    assert result["tables"]["statistical_observations"]==12
+    assert result["tables"]["municipality_coverage"]==290
+    assert result["tables"]["comparable_national_years"]==2
+    db=sqlite3.connect(folder/"ideburen_tables.gpkg")
+    try:
+        assert db.execute("SELECT COUNT(*) FROM gpkg_contents WHERE data_type='features'").fetchone()[0]==0
+        assert db.execute("SELECT typeof(value) FROM statistical_observations WHERE geography_code='SE' LIMIT 1").fetchone()[0]=="integer"
+        assert db.execute("SELECT typeof(uppsala_2022_value) FROM municipality_coverage WHERE municipality_code='0380'").fetchone()[0]=="integer"
+        assert db.execute("SELECT uppsala_2022_value FROM municipality_coverage WHERE municipality_code='0180'").fetchone()[0] is None
+    finally:
+        db.close()
+
+def test_full_synthetic_inventory_stays_unverified(tmp_path):
+    codes=[r["municipality_code"] for r in s.read_csv(s.MUNICIPAL)]
+    inventory=tmp_path/"municipal_inventory.csv"
+    with inventory.open("w",encoding="utf-8",newline="") as f:
+        w=csv.DictWriter(f,fieldnames=["row_id","municipality_code","organisation_count","count_status","source_id"])
+        w.writeheader()
+        for i,code in enumerate(codes):
+            amount=str(i+1) if i<10 else ""
+            w.writerow({"row_id":f"n/{i+2}","municipality_code":code,"organisation_count":amount,
+                        "count_status":"reported_number_unverified" if amount else "not_reported","source_id":"seed_290"})
+    manifest=s.build(tmp_path/"report",inventory)
+    assert manifest["wp04_inventory_loaded"]
+    excluded=s.read_csv(tmp_path/"report/unverified_inventory_excluded.csv")
+    assert len(excluded)==290
+    assert sum(bool(x["organisation_count"]) for x in excluded)==10
+    assert all(x["harmonization_status"]=="NOT_COMPARABLE_UNTIL_METRIC_METHOD_SOURCE_AUDIT" for x in excluded)
+    assert manifest["reference_observation_count"]==12
