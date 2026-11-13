@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Historic municipality geography crosswalk (proposed)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_code",
+    "source_year",
+    "target_code",
+    "target_year",
+    "change_type",
+    "source_id",
+    "verification_status"
+  ],
+  "properties": {
+    "source_code": {
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "source_year": {
+      "type": "integer",
+      "minimum": 2000
+    },
+    "target_code": {
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "target_year": {
+      "type": "integer",
+      "minimum": 2000
+    },
+    "change_type": {
+      "enum": [
+        "unchanged",
+        "renamed",
+        "split",
+        "merged",
+        "transferred",
+        "reclassified"
+      ]
+    },
+    "weight": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "weight_method": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "verification_status": {
+      "enum": [
+        "primary_verified",
+        "secondary_verified",
+        "unverified"
+      ]
+    }
+  }
+}
