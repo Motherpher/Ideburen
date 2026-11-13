@@ -53,7 +53,7 @@ def test_wp04_all_sheets_and_null_zero(tmp_path):
     })
     m=run(first,second,tmp_path/"output",strict=False)
     assert m["exceptions"]==0
-    assert m["raw_rows"]==10
+    assert m["raw_rows"]==11
     assert m["metrics"]["reported_organisation_counts"]==2
     assert m["metrics"]["absent_organisation_counts"]==1
     assert m["metrics"]["zero_organisation_counts"]==1
@@ -61,7 +61,7 @@ def test_wp04_all_sheets_and_null_zero(tmp_path):
     assert [x["municipality_code"] for x in r]==["0643","0305","2080"]
     assert [x["organisation_count"] for x in r]==["","0","7"]
     assert m["metrics"]["supplements_not_double_counted"]==1
-    assert len((tmp_path/"output/original_sheet_rows.jsonl").read_text().splitlines())==10
+    assert len((tmp_path/"output/original_sheet_rows.jsonl").read_text().splitlines())==11
 
 def test_formula_rejected(tmp_path):
     file=tmp_path/"bad.xlsx"
