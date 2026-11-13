@@ -13,6 +13,7 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -e '.[dev]'
       - run: python -m ideburen.cli validate
+      - run: python -m ideburen.sources validate
       - run: python -m pytest -q
       - run: python -m ideburen.cli build --out build
       - run: python -m ideburen.cli package --input build --out build/ideburen_tables.gpkg
