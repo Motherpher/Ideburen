@@ -16,8 +16,10 @@ jobs:
       - run: python -m ideburen.wp04 --help
       - run: python -m ideburen.decision_engine --help
       - run: python -m ideburen.sources validate
+      - run: python -m ideburen.statistics validate
       - run: python -m pytest -q
       - run: python -m ideburen.cli build --out build
+      - run: python -m ideburen.statistics build --out build
       - run: python -m ideburen.cli package --input build --out build/ideburen_tables.gpkg
       - name: Upload QGIS attribute preview (NOT a spatial release)
         uses: actions/upload-artifact@v4
@@ -27,6 +29,10 @@ jobs:
             build/municipalities.csv
             build/counties.csv
             build/uppsala_2022.csv
+            build/statistical_observations.csv
+            build/municipality_coverage.csv
+            build/comparable_national_years.csv
+            build/statistical_manifest.json
             build/publications.csv
             build/manifest.json
             build/ideburen_tables.gpkg

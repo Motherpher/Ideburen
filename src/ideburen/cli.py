@@ -159,16 +159,17 @@ def gpkg(src,destination):
              (strftime('%Y-%m-%dT%H:%M:%fZ','now')),min_x DOUBLE,min_y DOUBLE,max_x DOUBLE,max_y DOUBLE,srs_id INTEGER)""")
         db.execute("INSERT INTO gpkg_spatial_ref_sys VALUES ('Undefined cartesian',-1,'NONE',-1,'undefined','undefined'),('Undefined geographic',0,'NONE',0,'undefined','undefined')")
         counts={}
-        for table in FILES:
+        for table in list(FILES) + [n for n in ("statistical_observations","municipality_coverage","comparable_national_years") if (src/(n+".csv")).exists()]:
             rows=read_csv(src/(table+".csv"))
             if not rows:raise ValueError("Missing rows: "+table)
             columns=list(rows[0])
             assert all(re.fullmatch(r"[a-zA-Z_][a-zA-Z_0-9]*",c) for c in columns)
-            sqlcols=",".join('"'+k+'" TEXT' for k in columns)
+            numeric={"value","uppsala_2022_value","from_value","to_value","reported_delta"} if table in ("statistical_observations","municipality_coverage","comparable_national_years") else set()
+            sqlcols=",".join('"'+k+'" '+("INTEGER" if k in numeric else "TEXT") for k in columns)
             db.execute('CREATE TABLE "'+table+'" (fid INTEGER PRIMARY KEY AUTOINCREMENT,'+sqlcols+')')
             keys=",".join('"'+k+'"' for k in columns)
             marks=",".join("?" for _ in columns)
-            db.executemany('INSERT INTO "'+table+'" ('+keys+') VALUES ('+marks+')',[[r[c] for c in columns] for r in rows])
+            db.executemany('INSERT INTO "'+table+'" ('+keys+') VALUES ('+marks+')',[[((int(r[c]) if r[c]!="" else None) if c in numeric else r[c]) for c in columns] for r in rows])
             db.execute("INSERT INTO gpkg_contents(table_name,data_type,identifier,description) VALUES (?,?,?,?)",
                        (table,"attributes",table,"No polygons: attribute data only"))
             counts[table]=len(rows)

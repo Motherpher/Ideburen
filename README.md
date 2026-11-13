@@ -34,3 +34,6 @@ The canonical two-workbook inventory ingest is `python -m ideburen.wp04`; the ea
 
 ## Decision Engine — WP05
 Source-traceable, non-causal institutional decision graphs are implemented in src/ideburen/decision_engine.py. Uppsala and Tierp pilots and review gaps: [WP05 pilots](docs/WP05_PILOTS.md). The canonical engine reads private WP04 outputs locally and produces GraphML/CSV cases, actors, document locators, chronological edges, uncertainty and review requests. [Specification](docs/WP05_DECISION_ENGINE.md) and [acceptance](docs/WP05_ACCEPTANCE.md). Original municipal decisions still require source-by-source HARP RefA audit; no legal-decision publication is authorized.
+
+## WP06 Statistical Pipeline
+Verified national summary reference points (SCB 2023/2024) are kept separate from the Uppsala 2022 seven-legal-form municipality series. `python -m ideburen.statistics validate` checks definitions and provenance; `python -m ideburen.statistics build --out build` writes QGIS-joinable, non-spatial tables with missingness and comparability gates. See [WP06 specification](docs/WP06_STATISTICS.md) and [acceptance](docs/WP06_ACCEPTANCE.md). The published WP04 inventory is not a complete national statistical register.
