@@ -129,7 +129,9 @@ def _diacritics(x):
 
 def _place_aliases(name):
     stem=name
-    return [stem,stem+" kommun",stem+"s kommun",stem+" stad",stem+"s stad","Region "+stem]
+    aliases=[stem,stem+" kommun",stem+"s kommun",stem+" stad",stem+"s stad","Region "+stem]
+    if stem=="Falun":aliases.append("Falu kommun")
+    return aliases
 
 def geocodes():
     exact=defaultdict(set);loose=defaultdict(set)
