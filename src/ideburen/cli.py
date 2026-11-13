@@ -94,9 +94,11 @@ def validate():
 def ingest(municipal,uppsala,out):
     validate()
     lookup={}
+    exact={}
     for r in read_csv(ROOT/"data/curated/dimensions/municipalities.csv"):
         for alias in (r["municipality_name"],r["municipality_name"]+" kommun",r["municipality_name"]+"s kommun"):
             lookup.setdefault(normalize(alias),set()).add(r["municipality_code"])
+            exact.setdefault(alias.casefold().strip(),set()).add(r["municipality_code"])
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
     now=datetime.now(timezone.utc).isoformat();staged=[];errors=[];inputs=[]
     for label,path in (("national_inventory",municipal),("uppsala_decisions",uppsala)):
@@ -104,7 +106,9 @@ def ingest(municipal,uppsala,out):
         for sheet,n,data in xlsx_rows(path):
             if label=="national_inventory" and sheet!="Alla kommuner":continue
             if label=="uppsala_decisions" and sheet not in ("Beslutskedjor","Föreningar","Registerkällor"):continue
-            place=str(data.get("Kommun") or "");options=lookup.get(normalize(place),set())
+            place=str(data.get("Kommun") or "")
+            # Accent-preserving exact match first: Habo and Håbo MUST remain distinct.
+            options=exact.get(place.casefold().strip(),set()) or lookup.get(normalize(place),set())
             code=next(iter(options)) if len(options)==1 else ""
             staged.append({"dataset":label,"sheet":sheet,"row_number":n,"municipality":place,
                 "municipality_code":code,"source_sha256":sha,"status":"staging_unverified",
