@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ideburen WP06 Statistical Observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "geography_code",
+    "geography_level",
+    "metric_id",
+    "value",
+    "unit",
+    "observation_year",
+    "source_id",
+    "method_id",
+    "population_id",
+    "source_version",
+    "source_url",
+    "source_locator",
+    "evidence_status",
+    "precision_status"
+  ],
+  "properties": {
+    "geography_code": {
+      "type": "string",
+      "pattern": "^(SE|[0-9]{4})$"
+    },
+    "geography_level": {
+      "enum": [
+        "country",
+        "municipality"
+      ]
+    },
+    "metric_id": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$"
+    },
+    "unit": {
+      "const": "organisations"
+    },
+    "observation_year": {
+      "type": "string",
+      "pattern": "^20[0-9]{2}$"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "method_id": {
+      "type": "string"
+    },
+    "population_id": {
+      "type": "string"
+    },
+    "source_version": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string"
+    },
+    "source_locator": {
+      "type": "string"
+    },
+    "evidence_status": {
+      "enum": [
+        "primary_page_verified",
+        "primary_verified"
+      ]
+    },
+    "precision_status": {
+      "enum": [
+        "rounded_reported",
+        "integer_table_count"
+      ]
+    }
+  }
+}
