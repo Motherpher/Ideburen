@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WP03 Source Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id",
+    "title",
+    "publisher",
+    "study_id",
+    "reference",
+    "provenance_note",
+    "source_status",
+    "access",
+    "checksum_status",
+    "rights_status"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "publisher": {
+      "type": "string",
+      "minLength": 1
+    },
+    "study_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reference": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_status": {
+      "enum": [
+        "primary_verified",
+        "metadata_page_verified",
+        "metadata_only",
+        "internal_inventory",
+        "secondary_pending",
+        "unverified",
+        "contradicted",
+        "unavailable"
+      ]
+    },
+    "access": {
+      "enum": [
+        "public",
+        "internal",
+        "restricted"
+      ]
+    },
+    "original_url": {
+      "type": "string"
+    },
+    "provenance_note": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checksum_status": {
+      "enum": [
+        "computed",
+        "not_computed"
+      ]
+    },
+    "checksum_sha256": {
+      "type": "string",
+      "pattern": "^$|^[a-f0-9]{64}$"
+    },
+    "rights_status": {
+      "enum": [
+        "not_reviewed_for_redistribution",
+        "approved",
+        "restricted",
+        "denied"
+      ]
+    }
+  }
+}
