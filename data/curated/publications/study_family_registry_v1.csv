@@ -1,0 +1,40 @@
+study_id,publication_count,scope,deduplication_status
+study_uppsala_2022,0,,single_or_reference
+seed_inventory_290,0,,single_or_reference
+seed_inventory_uppsala,0,,single_or_reference
+seed_geography_2025,0,,single_or_reference
+institution_uppsala_2025,0,,single_or_reference
+institution_uppsala_2018,0,,single_or_reference
+institution_tierp_2025,0,,single_or_reference
+institution_osthammar_2020,0,,single_or_reference
+reference_scb_2026,0,,single_or_reference
+source_lm_boundary_2026,0,,single_or_reference
+study_skane_2005_2006,1,Skåne,single_or_reference
+study_skane_2015,1,Skåne,single_or_reference
+study_blekinge_2015,1,Blekinge,single_or_reference
+study_skane_blekinge_2015,1,Skåne;Blekinge,single_or_reference
+study_kronoberg_2021,1,Kronoberg,single_or_reference
+study_varmland_2023,3,Värmland;Värmland;Värmland,linked_editions_or_supplements
+study_gavleborg_2026,1,Gävleborg,single_or_reference
+study_fyrbodal_2023,1,Västra Götaland – Fyrbodal,single_or_reference
+study_norrbotten_2017,1,Norrbotten,single_or_reference
+study_norrbotten_2020,1,Norrbotten,single_or_reference
+study_vasterbotten_unknown,1,Västerbotten,single_or_reference
+study_orebro_pandemic_2020,1,Örebro,single_or_reference
+study_orebro_social_2020,1,Örebro,single_or_reference
+study_sodermanland_integration_2016,1,Södermanland,single_or_reference
+study_sormland_2023,10,Södermanland;Eskilstuna;Flen;Gnesta;Katrineholm;Nyköping;Oxelösund;Strängnäs;Trosa;Vingåker,linked_editions_or_supplements
+study_stockholm_samverkan,1,Stockholms stad,single_or_reference
+study_stockholm_tillit,1,Stockholms stad,single_or_reference
+study_norrtalje_2026,1,Norrtälje,single_or_reference
+project_jonkoping_2026,1,Jönköping,single_or_reference
+study_vastmanland_integration,1,Västmanland,single_or_reference
+study_mucf_regions_2023,1,Sverige – flera regioner,single_or_reference
+study_rural_2026,1,Sverige;Gotland fallstudie,single_or_reference
+study_scb_2023,1,Sverige,single_or_reference
+study_huddinge_2023,1,Huddinge,single_or_reference
+study_danderyd_2025,1,Danderyd,single_or_reference
+study_varberg_2019,1,Varberg,single_or_reference
+study_linkoping_2017,1,Linköping,single_or_reference
+study_goteborg_funding_2022,1,Göteborg,single_or_reference
+study_malmo_2025,1,Malmö,single_or_reference
