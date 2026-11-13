@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WP05 explicit HARP-audited relation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "from_row_id",
+    "to_row_id",
+    "relation",
+    "source_url",
+    "source_locator",
+    "reviewer",
+    "audit_date",
+    "harp_status"
+  ],
+  "properties": {
+    "from_row_id": {
+      "type": "string"
+    },
+    "to_row_id": {
+      "type": "string"
+    },
+    "relation": {
+      "enum": [
+        "prepares",
+        "recommends",
+        "adopts",
+        "amends",
+        "supersedes",
+        "implements",
+        "follows_up",
+        "comments_on",
+        "reviews"
+      ]
+    },
+    "source_url": {
+      "type": "string",
+      "pattern": "^https://"
+    },
+    "source_locator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "harp_status": {
+      "const": "RefA_approved"
+    }
+  }
+}

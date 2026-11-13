@@ -1,0 +1,10 @@
+case_id,municipality_code,source_rows,focus,seed_status
+uppsala_cooperation,0380,8,LÖK and municipal policy,seed_index_not_primary_reaudited
+tierp_cooperation,0360,5,LÖK and revision,seed_index_not_primary_reaudited
+knivsta_cooperation,0330,5,Association council and dialogue,seed_index_not_primary_reaudited
+knivsta_social_grants,0330,1,Separate social board grants,seed_index_not_primary_reaudited
+osthammar_cooperation,0382,2,Civil society declaration,seed_index_not_primary_reaudited
+enkoping_cooperation,0381,2,Association policy and dialogue,seed_index_not_primary_reaudited
+habo_iop,0305,1,IOP guidelines,seed_index_not_primary_reaudited
+heby_associations,0331,2,Association support,seed_index_not_primary_reaudited
+alvkarleby_associations,0319,1,Association rules,seed_index_not_primary_reaudited

@@ -1,0 +1,26 @@
+{
+  "name": "ideburen.decision_engine",
+  "version": "1.0",
+  "source_dataset": "seed_uppsala",
+  "input": "WP04 local decision_events.csv",
+  "optional_inputs": [
+    "WP04 local raw_staging.jsonl",
+    "human RefA-audited relations.csv"
+  ],
+  "outputs": [
+    "decision_events.csv",
+    "cases.csv",
+    "decision_edges.csv",
+    "decision_graph.graphml",
+    "actors.csv",
+    "documents.csv",
+    "process_gaps.csv",
+    "evidence_requests.csv",
+    "exceptions.csv",
+    "manifest.json"
+  ],
+  "qgis_join_key": "municipality_code",
+  "edge_default": "temporal_not_causal",
+  "human_review_required": true,
+  "release_approved": false
+}
