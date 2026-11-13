@@ -1,0 +1,14 @@
+{
+  "source_authority": "Lantmäteriet",
+  "source_url": "https://geotorget.lantmateriet.se/geodataprodukter/kommun-lan-rike-nedladdning-api",
+  "source_product": "Kommun, län och rike Nedladdning",
+  "boundary_year": 2026,
+  "acquisition_date": "FILL_AFTER_DOWNLOAD",
+  "source_crs": "EPSG:3006",
+  "license": "FILL_EXACT_LICENSE_AND_ATTRIBUTION",
+  "usage_rights_reviewed": false,
+  "sha256": "FILL_SHA256_OF_ACTUAL_GPKG",
+  "original_file": "FILL_FILENAME",
+  "method": "Lantmäteriet yearly municipal polygons; authorized STAC download; preserve raw source and verify 290 geometries, QGIS topology, codes and vintage",
+  "notes": "THIS IS A TEMPLATE, NOT AN ACQUIRED DATASET"
+}
