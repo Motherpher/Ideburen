@@ -1,0 +1,15 @@
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+*.qgs~
+data/raw/*
+!data/raw/README.md
+data/staging/*
+!data/staging/.gitkeep
+.env
+*.token
+.DS_Store

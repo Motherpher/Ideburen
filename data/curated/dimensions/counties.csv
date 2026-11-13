@@ -1,0 +1,22 @@
+county_code,county_name,reference_year,verification_status
+10,Blekinge län,2026,primary_metadata_verified
+12,Skåne län,2026,primary_metadata_verified
+13,Hallands län,2026,primary_metadata_verified
+14,Västra Götalands län,2026,primary_metadata_verified
+17,Värmlands län,2026,primary_metadata_verified
+18,Örebro län,2026,primary_metadata_verified
+19,Västmanlands län,2026,primary_metadata_verified
+20,Dalarnas län,2026,primary_metadata_verified
+21,Gävleborgs län,2026,primary_metadata_verified
+22,Västernorrlands län,2026,primary_metadata_verified
+23,Jämtlands län,2026,primary_metadata_verified
+24,Västerbottens län,2026,primary_metadata_verified
+25,Norrbottens län,2026,primary_metadata_verified
+01,Stockholms län,2026,primary_metadata_verified
+03,Uppsala län,2026,primary_metadata_verified
+04,Södermanlands län,2026,primary_metadata_verified
+05,Östergötlands län,2026,primary_metadata_verified
+06,Jönköpings län,2026,primary_metadata_verified
+07,Kronobergs län,2026,primary_metadata_verified
+08,Kalmar län,2026,primary_metadata_verified
+09,Gotlands län,2026,primary_metadata_verified

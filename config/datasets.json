@@ -1,0 +1,19 @@
+{
+  "datasets": [
+    {
+      "id": "municipalities",
+      "path": "data/curated/dimensions/municipalities.csv",
+      "grain": "municipality_code+reference_year",
+      "release_status": "provisional_geographic_keys"
+    },
+    {
+      "id": "uppsala_2022",
+      "path": "data/curated/observations/uppsala_2022.csv",
+      "grain": "municipality_code+metric_id+value_year",
+      "release_status": "research_verified_nonspatial"
+    }
+  ],
+  "crs": "EPSG:3006",
+  "drive_folder": "1pwpsDrhD_UM24kwB8Et5ZNtP1mtaxOXy",
+  "release_gate": "director_approval_required"
+}
