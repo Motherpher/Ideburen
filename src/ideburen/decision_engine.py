@@ -11,6 +11,7 @@ import hashlib
 import json
 import re
 import unicodedata
+import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
@@ -141,7 +142,7 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
     municipality_codes={r["municipality_code"] for r in
                         read_csv(ROOT/"data/curated/dimensions/municipalities.csv")}
     actors_by_row=_load_raw_actors(raw_jsonl)
-    events=[];actors={};documents={};issues=[];case_events=defaultdict(list)
+    events=[];actors={};documents={};issues=[];case_events=defaultdict(list);requests=[]
     seen_rows=set()
     for r in source_rows:
         rid=r["row_id"]
@@ -201,6 +202,21 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
         }
         events.append(event)
         case_events[case].append(event)
+        note=r["verification_status"].casefold()
+        requires_review=any(t in note for t in
+                            ("återstår","måste inhämtas","behöver","saknas","ej inhämtade",
+                             "dubbelt", "dubbelkontroll", "förarbete"))
+        if requires_review or not doc_id or not start:
+            reason = ("document_or_procedural_followup" if requires_review
+                      else "missing_document_locator" if not doc_id
+                      else "unverified_time")
+            requests.append({
+                "request_id":"req_"+event_id,"event_id":event_id,"case_id":case,
+                "municipality_code":code,"request_type":reason,
+                "source_verification_note":r["verification_status"],
+                "request_status":"research_needed",
+                "evidence_status":"inferred_review_task_from_seed_not_official_absence"
+            })
     if strict and len(source_rows)!=27:
         issues.append({"severity":"BLOCKING","issue":"source_row_count_drift","event_id":"","detail":str(len(source_rows))})
     edges=[];gaps=[];cases=[]
@@ -255,18 +271,40 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
        "link_status","document_type","source_id"])
     _write(output/"process_gaps.csv",gaps,["case_id","municipality_code","stage",
        "gap_status","not_a_claim_of_absence","request"])
+    _write(output/"evidence_requests.csv",requests,["request_id","event_id","case_id",
+       "municipality_code","request_type","source_verification_note","request_status","evidence_status"])
     _write(output/"exceptions.csv",issues,["severity","issue","event_id","detail"])
+    # Portable GraphML: chronological edges only, without fictional causal edges.
+    graphml=ET.Element("graphml",xmlns="http://graphml.graphdrawing.org/xmlns")
+    for key_id,context,name in [
+        ("case","node","case_id"),("municipality","node","municipality_code"),
+        ("type","node","event_type"),("source","node","source_row_id"),
+        ("relation","edge","relation")]:
+        ET.SubElement(graphml,"key",id=key_id,**{"for":context,"attr.name":name,"attr.type":"string"})
+    graph=ET.SubElement(graphml,"graph",id="ideburen_decisions",edgedefault="directed")
+    for node in events:
+        n=ET.SubElement(graph,"node",id=node["event_id"])
+        for key_id,col in (("case","case_id"),("municipality","municipality_code"),
+                           ("type","event_type"),("source","source_row_id")):
+            ET.SubElement(n,"data",key=key_id).text=str(node[col])
+    for edge in edges:
+        el=ET.SubElement(graph,"edge",id=edge["edge_id"],source=edge["from_event_id"],
+                         target=edge["to_event_id"])
+        ET.SubElement(el,"data",key="relation").text=edge["relation"]
+    ET.ElementTree(graphml).write(output/"decision_graph.graphml",encoding="utf-8",
+                                  xml_declaration=True)
     manifest={
        "contract":"wp05.v1","input":"WP04 decision_events.csv",
        "input_sha256":hashlib.sha256(input_csv.read_bytes()).hexdigest(),
        "raw_actor_metadata_joined":bool(raw_jsonl),
        "events":len(events),"cases":len(cases),"actors":len(actors),
        "documents":len(documents),"chronological_edges":len(edges),
-       "missing_stage_flags":len(gaps),"blocking_exceptions":len(issues),
+       "missing_stage_flags":len(gaps),"evidence_followup_requests":len(requests),
+       "blocking_exceptions":len(issues),
        "relation_semantics":"temporal_only_not_causal",
        "primary_decisions_validated":False,"release_approval":False,
        "coverage":"research_seed_not_all_municipal_decisions",
-       "files":sorted(p.name for p in output.glob("*.csv"))
+       "files":sorted(p.name for p in output.iterdir() if p.suffix in (".csv",".graphml"))
     }
     _json(output/"manifest.json",manifest)
     if issues:
