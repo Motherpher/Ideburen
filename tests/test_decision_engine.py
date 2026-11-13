@@ -105,3 +105,34 @@ def test_strict_counter_gate(tmp_path):
     fixture(tmp_path/"events.csv",[fake_event("x","0380","2025","Beslut","A")])
     with pytest.raises(ValueError,match="1 decision graph exceptions"):
         build(tmp_path/"events.csv",tmp_path/"out",strict=True)
+
+
+def test_normative_policy_not_counted_as_implemented(tmp_path):
+    fixture(tmp_path/"events.csv",[
+        fake_event("uppsala_register/Beslutskedjor/7","0380","2025-09-08","Beslut","Policy adopted"),
+        fake_event("uppsala_register/Beslutskedjor/9","0380","2026","Genomförande",
+                   "Policyn kräver årlig uppföljning tillsammans med civilsamhället"),
+        fake_event("uppsala_register/Beslutskedjor/14","0360","2025–2031","Styrdokument","LÖK giltig i perioden")
+    ])
+    result=build(tmp_path/"events.csv",tmp_path/"out",strict=False)
+    assert result["normative_or_period_claims_excluded_from_temporal_graph"]==2
+    events=read(tmp_path/"out/decision_events.csv")
+    kinds={x["source_row_id"]:x["claim_kind"] for x in events}
+    assert kinds["uppsala_register/Beslutskedjor/9"]=="normative_requirement"
+    assert kinds["uppsala_register/Beslutskedjor/14"]=="document_validity_period"
+    gaps=read(tmp_path/"out/process_gaps.csv")
+    assert any(g["case_id"]=="uppsala_cooperation" and g["stage"]=="implementation" for g in gaps)
+    assert not read(tmp_path/"out/decision_edges.csv")  # No chronological inference from norms
+
+def test_graphml_export_integrity(tmp_path):
+    from xml.etree import ElementTree as ET
+    fixture(tmp_path/"events.csv",[
+        fake_event("uppsala_register/Beslutskedjor/4","0380","2025-06-10","Beredning","AU"),
+        fake_event("uppsala_register/Beslutskedjor/7","0380","2025-09-08","Beslut","KF")
+    ])
+    result=build(tmp_path/"events.csv",tmp_path/"out",strict=False)
+    tree=ET.parse(tmp_path/"out/decision_graph.graphml")
+    uri={"g":"http://graphml.graphdrawing.org/xmlns"}
+    assert len(tree.findall(".//g:node",uri))==2
+    assert len(tree.findall(".//g:edge",uri))==1
+    assert result["chronological_edges"]==1
