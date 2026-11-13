@@ -1,0 +1,23 @@
+{
+  "id": "scb_2026_municipality_county_codes",
+  "authority": "Statistics Sweden (SCB)",
+  "publication": "Län och kommuner 2026 i kodnummerordning",
+  "reference_year": 2026,
+  "access_date": "2026-11-13",
+  "source_page": "https://www.scb.se/hitta-statistik/regional-statistik-och-kartor/regionala-indelningar/lan-och-kommuner/lan-och-kommuner-i-kodnummerordning/",
+  "source_xlsx": "https://www.scb.se/contentassets/7a89e48960f741e08918e489ea36354a/kommunlankod-2026.xlsx",
+  "verification_method": "full_rendered_official_SCB_list_2026_manual_transcription_and_bidirectional_exact_programmatic_comparison",
+  "checked_municipalities": 290,
+  "checked_counties": 21,
+  "missing_codes": 0,
+  "extra_codes": 0,
+  "name_code_mismatches": 0,
+  "downloaded_official_xlsx": false,
+  "verified_fields": [
+    "municipality_code",
+    "county_code",
+    "municipality_name"
+  ],
+  "verified_geometry": false,
+  "publication_rights": "SCB open statistics/CC0 subject to correct source attribution per SCB policy"
+}
