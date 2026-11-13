@@ -89,8 +89,16 @@ def validate():
     assert all(v["value_year"]=="2022" and v["source_id"] and v["population"] and v["method_id"] for v in obs)
     assert len({o["municipality_code"] for o in obs})==8 and all(o["municipality_code"] in keys for o in obs)
     assert sum(int(v["value"]) for v in obs)==10821
+    # WP02: independently pinned SCB 2026 code/name snapshot. Reject drift.
+    with (ROOT/"data/reference/scb_2026_codes_snapshot.csv").open(encoding="utf-8",newline="") as f:
+        ref=list(csv.DictReader(line for line in f if not line.startswith("#")))
+    assert len(ref)==290 and len({r["municipality_code"] for r in ref})==290
+    official={r["municipality_code"]:r["municipality_name"] for r in ref}
+    assert {v["municipality_code"]:v["municipality_name"] for v in cities}==official,"SCB 2026 code/name mismatch"
+    assert all(v["reference_year"]=="2026" and v["verification_status"]=="primary_verified" for v in cities)
+    assert all(v["reference_year"]=="2026" and v["verification_status"]=="primary_verified" for v in counties)
     return {"municipalities":290,"counties":21,"uppsala_2022_total":10821,
-            "geography_validation":"PROVISIONAL_OFFICIAL_SCB_RECHECK_REQUIRED",
+            "geography_validation":"SCB_2026_PRIMARY_CODES_VERIFIED",
             "spatial_boundaries":"NOT_ACQUIRED","public_release":"BLOCKED_DIRECTOR_REFA"}
 
 def ingest(municipal,uppsala,out):
