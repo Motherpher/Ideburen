@@ -136,3 +136,34 @@ def test_graphml_export_integrity(tmp_path):
     assert len(tree.findall(".//g:node",uri))==2
     assert len(tree.findall(".//g:edge",uri))==1
     assert result["chronological_edges"]==1
+
+
+def test_refa_edge_requires_claim_specific_evidence(tmp_path):
+    records=[
+       fake_event("uppsala_register/Beslutskedjor/4","0380","2025-06-10","Beredning","AU"),
+       fake_event("uppsala_register/Beslutskedjor/7","0380","2025-09-08","Beslut","KF")
+    ]
+    fixture(tmp_path/"events.csv",records)
+    assertions=tmp_path/"relations.csv"
+    fields=["from_row_id","to_row_id","relation","source_url",
+            "source_locator","reviewer","audit_date","harp_status"]
+    def write(items):
+        with assertions.open("w",encoding="utf-8",newline="") as f:
+            writer=csv.DictWriter(f,fieldnames=fields)
+            writer.writeheader();writer.writerows(items)
+    valid={
+      "from_row_id":records[0]["row_id"],"to_row_id":records[1]["row_id"],
+      "relation":"prepares","source_url":"https://example.org/municipal-protocol.pdf",
+      "source_locator":"p. 4, § 12","reviewer":"Human research reviewer",
+      "audit_date":"2026-11-13","harp_status":"RefA_approved"
+    }
+    invalid=dict(valid,source_locator="",harp_status="metadata_only")
+    write([invalid])
+    with pytest.raises(ValueError,match="decision graph exceptions"):
+        build(tmp_path/"events.csv",tmp_path/"fail",strict=False,assertions_csv=assertions)
+    write([valid])
+    result=build(tmp_path/"events.csv",tmp_path/"pass",strict=False,assertions_csv=assertions)
+    assert result["explicit_refa_relation_edges"]==1
+    edges=read(tmp_path/"pass/decision_edges.csv")
+    assert len([r for r in edges if r["relation"]=="prepares"])==1
+    assert all(r["causal_claim"]!="true" for r in edges)
