@@ -1,0 +1,71 @@
+name: CDX Anchor Conformance
+on:
+  pull_request:
+    paths:
+      - '.cdx/**'
+      - '.github/workflows/cdx-anchor-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - '.cdx/**'
+      - '.github/workflows/cdx-anchor-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cdx-anchor-conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch pinned CDX release as reference only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch 1.0.0 https://github.com/Hybrismannen/Conductellence-.git /tmp/cdx-law
+          test "$(git -C /tmp/cdx-law hash-object POLICY/control-registry.json)" = "55dbcdac2f822b59a5a5f0f19eeadfa61d2c7ed0"
+      - name: Install schema validator
+        run: python -m pip install --disable-pip-version-check 'jsonschema==4.23.0'
+      - name: Validate anchor identity, release pin and state
+        env:
+          EXPECTED_REPOSITORY: 'Motherpher/Ideburen'
+          EXPECTED_SYSTEM_ID: 'IDEBUREN'
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          from jsonschema import Draft202012Validator
+          a=json.loads(Path('.cdx/anchor.json').read_text())
+          schema=json.loads(Path('/tmp/cdx-law/DISTRIBUTION/cdx-anchor.schema.json').read_text())
+          Draft202012Validator.check_schema(schema)
+          Draft202012Validator(schema).validate(a)
+          assert a['governed_surface']['kind']=='REPOSITORY'
+          assert a['governed_surface']['identity']==os.environ['EXPECTED_REPOSITORY']
+          assert a['governed_surface']['repository']==os.environ['EXPECTED_REPOSITORY']
+          assert a['governed_surface']['system_id']==os.environ['EXPECTED_SYSTEM_ID']
+          assert a['cdx_authority']['repository']=='Hybrismannen/Conductellence-'
+          assert a['law_id']=='CDX-LAW-001'
+          assert a['binding_mode']=='PINNED_RELEASE'
+          assert a['policy_pin']['ref_type']=='RELEASE'
+          assert a['policy_pin']['ref']=='1.0.0'
+          assert a['policy_pin']['digest']=='git-blob-sha1:55dbcdac2f822b59a5a5f0f19eeadfa61d2c7ed0'
+          assert a['authority_context']['authority_ref_required'] is True
+          assert a['authority_context']['mandate_ref_required'] is True
+          assert a['local_enforcement']['fail_closed_for_consequential_effects'] is True
+          assert a['local_enforcement']['owner']==os.environ['EXPECTED_REPOSITORY']
+          assert a['conformance']['ci_workflow']=='.github/workflows/cdx-anchor-audit.yml'
+          assert a['binding_state'] in ['ANCHOR_DECLARED','CDX_BOUND','CDX_CI_MONITORED','CDX_RUNTIME_GUARDED','CDX_RUNTIME_VERIFIED']
+          if a['binding_state']=='ANCHOR_DECLARED':
+              assert a['verification']['verification_state']=='NOT_VERIFIED'
+          if a['binding_state']=='CDX_RUNTIME_VERIFIED':
+              assert a['conformance']['runtime_state']=='VERIFIED_RUNTIME_BOUND'
+              assert a['local_enforcement']['points']
+          print('CDX policy checksum, schema, repository identity and local declaration: PASS')
+          print('This job does not certify runtime effect mediation.')
+          PY
