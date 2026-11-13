@@ -122,7 +122,7 @@ def _load_raw_actors(path):
             }
     return actors
 
-def build(input_csv, output_dir, raw_jsonl=None, strict=True):
+def build(input_csv, output_dir, raw_jsonl=None, strict=True, assertions_csv=None):
     """Produce linked nodes, documents, actors, provenance, temporal graph and gaps."""
     input_csv=Path(input_csv)
     if not input_csv.is_file():raise FileNotFoundError(input_csv)
@@ -259,6 +259,43 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
                       "case_evidence_status":"research_inventory_not_primary_reaudited",
                       "complete_decision_chain":"false",
                       "causal_chain_evidenced":"false"})
+    # Explicit decision-process relations require document-level HARP RefA;
+    # chronology is not accepted as evidence of a dependency.
+    audited_relations={"prepares","recommends","adopts","amends","supersedes",
+                       "implements","follows_up","comments_on","reviews"}
+    if assertions_csv is not None:
+        assertion_rows=read_csv(assertions_csv)
+        source_map={e["source_row_id"]:e for e in events}
+        required={"from_row_id","to_row_id","relation","source_url",
+                  "source_locator","reviewer","audit_date","harp_status"}
+        if assertion_rows and not required.issubset(assertion_rows[0]):
+            raise ValueError("Assertions missing mandatory provenance/reviewer columns")
+        for n,a in enumerate(assertion_rows,2):
+            before=source_map.get(a["from_row_id"])
+            after=source_map.get(a["to_row_id"])
+            valid_date=bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}",a.get("audit_date","")))
+            try:
+                if valid_date: date.fromisoformat(a["audit_date"])
+            except ValueError: valid_date=False
+            valid_link=urlsplit(a.get("source_url","")).scheme=="https"
+            if (not before or not after or before["event_id"]==after["event_id"]
+                or before["municipality_code"]!=after["municipality_code"]
+                or a["relation"] not in audited_relations
+                or a.get("harp_status")!="RefA_approved"
+                or not valid_link or not a.get("source_locator")
+                or not a.get("reviewer") or not valid_date):
+                issues.append({"severity":"BLOCKING","issue":"invalid_audited_relation",
+                               "event_id":"","detail":"assertion row "+str(n)})
+                continue
+            edges.append({
+                "edge_id":"audit_"+hashlib.sha256(
+                    (before["event_id"]+after["event_id"]+a["relation"]).encode()).hexdigest()[:16],
+                "case_id":before["case_id"],"from_event_id":before["event_id"],
+                "to_event_id":after["event_id"],"relation":a["relation"],
+                "evidence_status":"explicit_RefA_reviewed_relation",
+                "causal_claim":"documented_relation_not_general_causality",
+                "verification_required":"false"
+            })
     event_ids={e["event_id"] for e in events}
     for e in edges:
         if e["from_event_id"] not in event_ids or e["to_event_id"] not in event_ids:
@@ -307,7 +344,9 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
        "input_sha256":hashlib.sha256(input_csv.read_bytes()).hexdigest(),
        "raw_actor_metadata_joined":bool(raw_jsonl),
        "events":len(events),"cases":len(cases),"actors":len(actors),
-       "documents":len(documents),"chronological_edges":len(edges),
+       "documents":len(documents),"graph_edges_total":len(edges),
+       "chronological_edges":sum(e["relation"]=="observed_temporal_precedence" for e in edges),
+       "explicit_refa_relation_edges":sum(e["evidence_status"]=="explicit_RefA_reviewed_relation" for e in edges),
        "missing_stage_flags":len(gaps),"evidence_followup_requests":len(requests),
        "blocking_exceptions":len(issues),
        "relation_semantics":"temporal_only_not_causal",
@@ -328,7 +367,9 @@ def main(argv=None):
     p.add_argument("--raw",help="WP04 raw_staging.jsonl, optional actor names")
     p.add_argument("--out",required=True)
     p.add_argument("--allow-nonstandard-row-count",action="store_true")
+    p.add_argument("--assertions",help="Locally reviewed relations with signed RefA and document locator")
     a=p.parse_args(argv)
-    result=build(a.events,a.out,a.raw,strict=not a.allow_nonstandard_row_count)
+    result=build(a.events,a.out,a.raw,strict=not a.allow_nonstandard_row_count,
+                 assertions_csv=a.assertions)
     print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=="__main__":main()
