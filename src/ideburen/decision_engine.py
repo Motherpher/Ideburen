@@ -187,11 +187,19 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
             documents[doc_id]={"document_id":doc_id,"url":url,
                                "link_status":"locator_not_read_or_page_verified",
                                "document_type":"unknown","source_id":SOURCE_ID}
+        # Distinguish observed-event claims from a document's normative
+        # requirements or validity period; neither is proof of implementation.
+        normalized_description=r["event_text"].casefold()
+        claim_kind=("normative_requirement" if stage=="implementation" and
+                    any(t in normalized_description for t in ("kräver","ska följas","bör följas"))
+                    else "document_validity_period" if stage=="adopted_instrument" and precision=="year_range"
+                    else "event_claim")
         event={
             "event_id":event_id,"case_id":case,"municipality_code":code,
             "source_row_id":rid,"source_id":r["source_id"],
             "source_sha256":r["source_sha256"],
             "event_type":stage,"original_stage":r["event_stage"],
+            "claim_kind":claim_kind,
             "original_period":r["period"],"date_earliest":start,"date_latest":end,
             "time_precision":precision,"temporal_uncertainty":str(uncertain).lower(),
             "description":r["event_text"],"actor_id":actor_id,
@@ -224,7 +232,8 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
         code=group[0]["municipality_code"]
         # Only strictly non-overlapping, unambiguous time windows create
         # precedence edges. A timeline edge is not an inferred causal edge.
-        ordered=sorted([r for r in group if r["date_earliest"]],
+        ordered=sorted([r for r in group if r["date_earliest"]
+                        and r["claim_kind"]=="event_claim"],
                        key=lambda x:(x["date_earliest"],x["date_latest"],x["event_id"]))
         for i,src in enumerate(ordered):
             nxt=next((dst for dst in ordered[i+1:] if
@@ -237,7 +246,7 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
                     "evidence_status":"computed_from_unverified_seed_dates",
                     "causal_claim":"false","verification_required":"true"
                 })
-        observed={r["event_type"] for r in group}
+        observed={r["event_type"] for r in group if r["claim_kind"]=="event_claim"}
         for required_stage,alternatives in COVERAGE.items():
             if observed.isdisjoint(alternatives):
                 gaps.append({"case_id":case,"municipality_code":code,
@@ -256,7 +265,7 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
             issues.append({"severity":"BLOCKING","issue":"orphan_edge","event_id":"","detail":e["edge_id"]})
     _write(output/"decision_events.csv",events,[
        "event_id","case_id","municipality_code","source_row_id","source_id","source_sha256",
-       "event_type","original_stage","original_period","date_earliest","date_latest",
+       "event_type","original_stage","claim_kind","original_period","date_earliest","date_latest",
        "time_precision","temporal_uncertainty","description","actor_id","document_id",
        "original_verification_note","evidence_status","primary_source_reaudited",
        "legal_decision_confirmed","is_publication_cleared"])
@@ -302,6 +311,8 @@ def build(input_csv, output_dir, raw_jsonl=None, strict=True):
        "missing_stage_flags":len(gaps),"evidence_followup_requests":len(requests),
        "blocking_exceptions":len(issues),
        "relation_semantics":"temporal_only_not_causal",
+       "normative_or_period_claims_excluded_from_temporal_graph":sum(
+         e["claim_kind"]!="event_claim" for e in events),
        "primary_decisions_validated":False,"release_approval":False,
        "coverage":"research_seed_not_all_municipal_decisions",
        "files":sorted(p.name for p in output.iterdir() if p.suffix in (".csv",".graphml"))
