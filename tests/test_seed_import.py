@@ -33,12 +33,12 @@ def test_seed_xlsx_reader_and_diacritics():
     with tempfile.TemporaryDirectory() as d:
         d=Path(d)
         first=d/"national.xlsx";second=d/"uppsala.xlsx"
-        make_workbook(first,"Alla kommuner",[["Kommun","Klassificering"],["Habo kommun","Ej verifierad"],["Håbo kommun","Ej verifierad"],["Östhammars kommun","Ej verifierad"]])
+        make_workbook(first,"Alla kommuner",[["Kommun","Klassificering"],["Habo kommun","Ej verifierad"],["Håbo kommun","Ej verifierad"],["Östhammars kommun","Ej verifierad"],["Stockholms stad","Ej verifierad"],["Falu kommun","Ej verifierad"],["Region Gotland","Ej verifierad"]])
         make_workbook(second,"Beslutskedjor",[["Kommun","Datum / period","Handling / händelse"],["Tierp","2025-09","LÖK"],["Uppsala","2025-09-08","Policy"]])
-        assert len(list(xlsx_rows(first)))==3
+        assert len(list(xlsx_rows(first)))==6
         result=ingest(first,second,d/"out")
-        assert result["staged_rows"]==5
+        assert result["staged_rows"]==8
         assert result["geocode_exceptions"]==0
         with open(d/"out/staging.csv",encoding="utf-8",newline="") as f:
             rows=list(csv.DictReader(f))
-        assert [r["municipality_code"] for r in rows]==["0643","0305","0382","0360","0380"]
+        assert [r["municipality_code"] for r in rows]==["0643","0305","0382","0180","2080","0980","0360","0380"]
