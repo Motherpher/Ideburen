@@ -110,7 +110,7 @@ def test_wp07_qgis_builder_python_syntax():
 
 def test_wp07_no_unverified_geometry_accepted(package):
     source, gpkg_path = package
-    with pytest.raises(ValueError, match="Missing GeoPackage geometry metadata"):
+    with pytest.raises(ValueError, match="Missing provenance key: source_authority"):
         gis.validate_spatial_handoff(
             gpkg_path, "municipalities", source/"statistical_manifest.json",
             2022
