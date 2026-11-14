@@ -21,6 +21,8 @@ jobs:
       - run: python -m ideburen.cli build --out build
       - run: python -m ideburen.statistics build --out build
       - run: python -m ideburen.cli package --input build --out build/ideburen_tables.gpkg
+      - run: python -m ideburen.gis validate-attributes --gpkg build/ideburen_tables.gpkg --source-dir build
+      - run: python -m ideburen.gis prepare --gpkg build/ideburen_tables.gpkg --source-dir build --out build/gis_handoff.json
       - name: Upload QGIS attribute preview (NOT a spatial release)
         uses: actions/upload-artifact@v4
         with:
@@ -36,4 +38,5 @@ jobs:
             build/publications.csv
             build/manifest.json
             build/ideburen_tables.gpkg
+            build/gis_handoff.json
           retention-days: 30

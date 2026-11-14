@@ -37,3 +37,6 @@ Source-traceable, non-causal institutional decision graphs are implemented in sr
 
 ## WP06 Statistical Pipeline
 Verified national summary reference points (SCB 2023/2024) are kept separate from the Uppsala 2022 seven-legal-form municipality series. `python -m ideburen.statistics validate` checks definitions and provenance; `python -m ideburen.statistics build --out build` writes QGIS-joinable, non-spatial tables with missingness and comparability gates. See [WP06 specification](docs/WP06_STATISTICS.md) and [acceptance](docs/WP06_ACCEPTANCE.md). The published WP04 inventory is not a complete national statistical register.
+
+## WP07 QGIS integration
+`python -m ideburen.gis validate-attributes --gpkg build/ideburen_tables.gpkg --source-dir build` verifies the *non-spatial* GeoPackage and WP06 input checksums. `python -m ideburen.gis prepare --gpkg build/ideburen_tables.gpkg --source-dir build --out build/gis_handoff.json` creates a ready-for-QGIS attribute handoff receipt. Licensed, authentic **2022** municipal boundaries, provenances, geographic topology and human review are still needed for an actual 2022 map. The guarded `.qgz` builder is in `geo/qgis/build_project.py`. See [WP07 guide](docs/WP07_QGIS_INTEGRATION.md) and [acceptance](docs/WP07_ACCEPTANCE.md).
