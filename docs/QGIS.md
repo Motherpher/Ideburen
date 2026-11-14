@@ -1,9 +1,11 @@
-# GIS contract: QGIS & FF-Spatial
+# QGIS user guide — Ideburen
 
-Canonical join keys: `municipality_code` as **four-character text**; `county_code` as two-character text. Name-based joins are prohibited.
+**WP07 baseline:** the QGIS-compatible **non-spatial** data product can already be opened in QGIS through `Layer > Add Layer > Add Vector Layer`, pointing at the generated `build/ideburen_tables.gpkg`. Select `municipality_coverage` (290 rows) and `statistical_observations` (12 rows). The table `statistical_observations` includes four national `SE` references, not municipal data.
 
-`python -m ideburen.cli package --input build --out build/ideburen_tables.gpkg` creates GeoPackage 1.2 **attribute tables only**, valid as QGIS data sources. Supply authoritative polygon data separately, with `boundary_vintage` and license before joining, and check 290 unique keys, invalid shapes, duplicate matches, temporal mismatches and unmatched codes. GeoPackage tables contain no fabricated geometry.
+**Real municipality polygons:** join by four-character `municipality_code` TEXT, not by names or integers. Use authorized historic **2022 polygons** for the Uppsala 2022 value map. Current/2026 polygons are only suitable for same-vintage administrative reference until a legally and methodologically accepted historical crosswalk is available.
 
-To create an interactive map, use `geo/qgis/load_ideburen.py` in QGIS Python console with a fully validated, locally available municipalities polygon layer. FF-Spatial consumes derived outputs only (no repo modifications, no bridge jobs by default).
+`geo/qgis/build_project.py` provides a guarded PyQGIS builder for the annual 2022 polygon input with a separate provenance file. It validates exact 290 municipality keys, geometry validity, EPSG:3006 and code-field type. It uses a standalone `QgsProject()`, preserving the user's open project. An unvalidated, unlicensed or mismatched boundary is rejected.
 
-Recommended CRS: EPSG:3006. Current boundaries must not be applied to 2000 statistics without documenting changed boundaries; prefer relevant annual boundaries.
+Commands and complete acceptance gates: [WP07 implementation](WP07_QGIS_INTEGRATION.md), [acceptance](WP07_ACCEPTANCE.md).
+
+**No geometry has been downloaded, fabricated or included in CI.** The QGIS project builder requires external data and an actual QGIS runtime; it does not imply an existing certified 2022 map.

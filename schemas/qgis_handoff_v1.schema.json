@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ideburen WP07 QGIS attribute-only handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "status",
+    "attribute_checks",
+    "join_code",
+    "join_type",
+    "analysis_crs",
+    "observation_year",
+    "required_boundary_year_for_value_map",
+    "polygon_file",
+    "polygon_checks",
+    "qgis_project",
+    "release_gate",
+    "source_checksum"
+  ],
+  "properties": {
+    "contract": {
+      "const": "ideburen.wp07.qgis.v1"
+    },
+    "status": {
+      "const": "NON_SPATIAL_READY"
+    },
+    "attribute_checks": {
+      "type": "object"
+    },
+    "join_code": {
+      "const": "municipality_code"
+    },
+    "join_type": {
+      "const": "four_character_text"
+    },
+    "analysis_crs": {
+      "const": "EPSG:3006"
+    },
+    "observation_year": {
+      "const": 2022
+    },
+    "required_boundary_year_for_value_map": {
+      "const": 2022
+    },
+    "boundary_source": {
+      "type": "string"
+    },
+    "polygon_file": {
+      "type": "null"
+    },
+    "polygon_checks": {
+      "const": "NOT_RUN"
+    },
+    "qgis_project": {
+      "const": "NOT_CREATED"
+    },
+    "release_gate": {
+      "const": "BLOCKED_BY_POLYGON_TOPOLOGY_HARP_AND_DIRECTOR"
+    },
+    "source_checksum": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}
