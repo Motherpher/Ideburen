@@ -25,23 +25,13 @@ jobs:
       - run: python -m ideburen.gis prepare --gpkg build/ideburen_tables.gpkg --source-dir build --out build/gis_handoff.json
       - run: python -m ideburen.ffspatial_adapter build --handoff build/gis_handoff.json --gpkg build/ideburen_tables.gpkg --source-dir build --out build/ffspatial_adapter --generated-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --ff-spatial-commit 76dcadfb5d116e238d404ad106465b8a39111d6f
       - run: python -m ideburen.ffspatial_adapter validate --out build/ffspatial_adapter
-      - name: Upload QGIS attribute preview (NOT a spatial release)
+      - name: WP09 source, integrity and privacy audit (release remains blocked)
+        run: python -m ideburen.governance audit --source-dir build --out build/wp09
+      - name: Upload sanitized WP09 QA log only (no datasets)
         uses: actions/upload-artifact@v4
         with:
-          name: ideburen-attributes-preview-not-cleared
+          name: ideburen-wp09-qa-not-release
           path: |
-            build/municipalities.csv
-            build/counties.csv
-            build/uppsala_2022.csv
-            build/statistical_observations.csv
-            build/municipality_coverage.csv
-            build/comparable_national_years.csv
-            build/statistical_manifest.json
-            build/publications.csv
-            build/manifest.json
-            build/ideburen_tables.gpkg
-            build/gis_handoff.json
-            build/ffspatial_adapter/ffspatial_normalized_observations.csv
-            build/ffspatial_adapter/ffspatial_provenance.json
-            build/ffspatial_adapter/ffspatial_adapter_receipt.json
+            build/wp09/wp09_audit.json
+            build/wp09/wp09_qa_log.csv
           retention-days: 30
