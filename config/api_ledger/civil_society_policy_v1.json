@@ -1,0 +1,30 @@
+{
+  "id": "ideburen_civilsamhalle_scope_v1",
+  "status": "proposed_analytical_not_official_sector_definition",
+  "unit": "legal_entity_not_workplace",
+  "core": [
+    "61",
+    "72"
+  ],
+  "review": [
+    "51",
+    "63",
+    "71"
+  ],
+  "separate": [
+    "53",
+    "54",
+    "62"
+  ],
+  "sni_standard": "SNI2025",
+  "sni_priority_prefixes": [
+    "93",
+    "94"
+  ],
+  "sni_hard_exclusion": false,
+  "missing_values": "unknown_not_zero",
+  "nonbusiness_active": "SCB business active status is not universal proof of civic inactivity",
+  "geography": "registered_office_not_workplace",
+  "publication_authorized": false,
+  "director_signoff_required": true
+}

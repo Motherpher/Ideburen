@@ -1,0 +1,34 @@
+{
+  "schema": "ideburen.api-ledger.v1",
+  "reviewed": "2026-11-15",
+  "apis": [
+    {
+      "id": "scb_afr_v2",
+      "name": "SCB Allmänna företagsregistret",
+      "documentation": "https://www.scb.se/vara-tjanster/bestall-data-och-statistik/foretagsregistret/avgiftsfria-uppgifter-i-foretagsregistret/",
+      "openapi": "https://apiafr.scb.se/swagger/v1/swagger.json",
+      "api_docs": "https://apiafr.scb.se/scalar/",
+      "registration": "https://registreraafr.scb.se/",
+      "auth": "personal_api_key",
+      "access_status": "not_connected",
+      "openapi_status": "spec_link_found_content_not_inspected",
+      "grain": "legal_entity",
+      "max_page_rows": 5000,
+      "max_requests_per_second": 5,
+      "temporal_semantics": "current_snapshot_no_history",
+      "raw_records": "local_private_only",
+      "live_fetch": "disabled_until_openapi_verified_and_access_granted",
+      "rights": "pending_review",
+      "release": "blocked_wp09"
+    },
+    {
+      "id": "scb_pxweb",
+      "name": "SCB Statistikdatabasen API",
+      "grain": "aggregate_statistics",
+      "documentation": "https://www.scb.se/vara-tjanster/oppna-data/api-for-statistikdatabasen/",
+      "access_status": "not_configured",
+      "live_fetch": "not_implemented",
+      "release": "blocked_wp09"
+    }
+  ]
+}
