@@ -40,3 +40,6 @@ Verified national summary reference points (SCB 2023/2024) are kept separate fro
 
 ## WP07 QGIS integration
 `python -m ideburen.gis validate-attributes --gpkg build/ideburen_tables.gpkg --source-dir build` verifies the *non-spatial* GeoPackage and WP06 input checksums. `python -m ideburen.gis prepare --gpkg build/ideburen_tables.gpkg --source-dir build --out build/gis_handoff.json` creates a ready-for-QGIS attribute handoff receipt. Licensed, authentic **2022** municipal boundaries, provenances, geographic topology and human review are still needed for an actual 2022 map. The guarded `.qgz` builder is in `geo/qgis/build_project.py`. See [WP07 guide](docs/WP07_QGIS_INTEGRATION.md) and [acceptance](docs/WP07_ACCEPTANCE.md).
+
+## WP08 FF-Spatial adapter
+The read-only producer adapter exports FF-Spatial-normalized observation fields and provenance from verified WP07 **attribute-only** products. Run `python -m ideburen.ffspatial_adapter --help`. See [contract](docs/FF_SPATIAL_ADAPTER.md) and [WP08 acceptance](docs/WP08_ACCEPTANCE.md). No FF-Spatial bridge job or real QGIS map is created.
