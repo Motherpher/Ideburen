@@ -23,7 +23,7 @@ jobs:
       - run: python -m ideburen.cli package --input build --out build/ideburen_tables.gpkg
       - run: python -m ideburen.gis validate-attributes --gpkg build/ideburen_tables.gpkg --source-dir build
       - run: python -m ideburen.gis prepare --gpkg build/ideburen_tables.gpkg --source-dir build --out build/gis_handoff.json
-      - run: python -m ideburen.ffspatial_adapter build --handoff build/gis_handoff.json --gpkg build/ideburen_tables.gpkg --source-dir build --out build/ffspatial_adapter --generated-at 2026-11-15T15:39:00Z --ff-spatial-commit 76dcadfb5d116e238d404ad106465b8a39111d6f
+      - run: python -m ideburen.ffspatial_adapter build --handoff build/gis_handoff.json --gpkg build/ideburen_tables.gpkg --source-dir build --out build/ffspatial_adapter --generated-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --ff-spatial-commit 76dcadfb5d116e238d404ad106465b8a39111d6f
       - run: python -m ideburen.ffspatial_adapter validate --out build/ffspatial_adapter
       - name: Upload QGIS attribute preview (NOT a spatial release)
         uses: actions/upload-artifact@v4
