@@ -43,3 +43,6 @@ Verified national summary reference points (SCB 2023/2024) are kept separate fro
 
 ## WP08 FF-Spatial adapter
 The read-only producer adapter exports FF-Spatial-normalized observation fields and provenance from verified WP07 **attribute-only** products. Run `python -m ideburen.ffspatial_adapter --help`. See [contract](docs/FF_SPATIAL_ADAPTER.md) and [WP08 acceptance](docs/WP08_ACCEPTANCE.md). No FF-Spatial bridge job or real QGIS map is created.
+
+## WP09 Quality and Governance
+`python -m ideburen.governance audit --source-dir build --out build/wp09` generates a source-level HARP matrix and RAG QA report, passing only if technical integrity gates pass. `python -m ideburen.governance release-check --source-dir build --out build/wp09-release` **fails closed** while evidence, licensing, polygon/QGIS or Director approval gates are red. GitHub Actions publishes QA summaries only, **not** raw statistical files, original workbooks or maps. See [QA method](docs/WP09_GOVERNANCE.md), [RAG register](docs/WP09_RAG_REGISTER.md), and [acceptance](docs/WP09_ACCEPTANCE.md).

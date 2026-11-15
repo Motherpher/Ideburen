@@ -1,4 +1,4 @@
-# Implementation status — 2026-11-13
+# Implementation status — 2026-11-15
 
 - **WP00** Partial: FF-Spatial README and QGIS integration contracts checked read-only; broader architecture review pending.
 - **WP01** Technical baseline complete; ADR-0001 and ADR-0002 formally **Accepted** by Director.
@@ -9,7 +9,7 @@
 - **WP06** **STATISTICAL PIPELINE IMPLEMENTED / SOURCE AUDIT OPEN**: SCB national corrected summary values 2023 and 2024, Uppsala 2022 seven-form municipal series, metric/method/population contracts, cross-population comparability gate, 290-municipality missingness matrix, audited QGIS non-spatial attribute exports and synthetic tests. Sörmland 2023 municipal annex statistics and WP04 unverified counts remain staging only. Detailed publication tables, license review and full HARP RefA are pending. See `docs/WP06_ACCEPTANCE.md`.
 - **WP07** **NON-SPATIAL QGIS HANDOFF IMPLEMENTED AND TESTED**: seven GeoPackage attribute tables, 290 exact municipality code checks, eight Uppsala 2022 values + 282 SQL NULLs, national data kept separate, SHA-256 provenance, runtime-independent readiness receipt, strict boundary-year gate and PyQGIS .qgz project builder. No original polygons acquired, QGIS geometry runtime untested, and no geographic map approved. 2022 polygons are required for the 2022 statistical map. See docs/WP07_ACCEPTANCE.md.
 - **WP08** **CONTRACT ADAPTER IMPLEMENTED**: pinned read-only FF-Spatial observation/provenance contracts at commit `76dcadfb5d116e238d404ad106465b8a39111d6f`; produces schema-aligned normalized eight-Uppsala-row CSV, provenance JSON, checksum receipt with WP07 readiness/rights gates. No spatial product, bridge job or remote execution. Actual FF-Spatial consumer runtime acceptance, authorized 2022 polygons and HARP RefA remain BLOCKED/PENDING. See `docs/WP08_ACCEPTANCE.md`.
-- **WP09** CI baseline QA passing; RefA human verification pending.
+- **WP09** **QA CONTROL PLANE IMPLEMENTED; PUBLIC RELEASE RED/BLOCKED**: source-by-source HARP Appendix O audit matrix (ITR1, ITR2, ITR4, ITR5, ITR6), RAG log with owners/actions, static privacy/secret/raw-binary scan, full WP07/WP08 provenance-chain checks, CI engineering audit separated from nonzero release-check. Automated preview artifact uploads of unapproved statistical data were disabled; only QA report can be uploaded. Six red release blockers remain: original HARP RefA, source redistribution rights, privacy human review, authorized official annual polygons, actual QGIS topology/runtime and Director release authorization. Lantmäteriet account application submitted, access not yet approved. See `docs/WP09_ACCEPTANCE.md` and `docs/WP09_RAG_REGISTER.md`.
 - **WP10** Public release remains **BLOCKED**.
 
 Distinguish implemented code, verified evidence, sourced real geometry and Director-authorized publication.
