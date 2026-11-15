@@ -151,8 +151,8 @@ def scan_public_tree():
             findings.append(issue("CREDENTIAL_PATTERN","RED","security",
                                   "Potential credential in "+rel.as_posix(),
                                   "Revoke exposed credential and rotate immediately","Security maintainer"))
-        if rel.as_posix().startswith(("data/curated/","manifests/")) and
-           PERSONAL_EMAIL_PATTERN.search(body):
+        if (rel.as_posix().startswith(("data/curated/","manifests/")) and
+                PERSONAL_EMAIL_PATTERN.search(body)):
             findings.append(issue("PERSONAL_CONTACT_IN_PUBLIC_DATA","RED","privacy",
                                   "Email-like contact in published data: "+rel.as_posix(),
                                   "Review legal basis and remove sensitive contact fields","Data steward"))
