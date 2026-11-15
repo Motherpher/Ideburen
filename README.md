@@ -49,3 +49,6 @@ The read-only producer adapter exports FF-Spatial-normalized observation fields 
 
 ## WP10 internal pilot candidate (not a public release)
 The reproducible v0.1.0-rc1 internal freeze validates Uppsala eight municipal 2022 observations and nine Sörmland 2023 municipal annex *metadata* entries, preserving blank/not-extracted figures. The frozen manifest pins exact Git revision and SHA-256 of inputs/outputs. GitHub Actions verifies the freeze but does not upload WP10 data, create a public tag, or authorize maps. See [WP10 method](docs/WP10_PILOT_RELEASE.md), [acceptance](docs/WP10_ACCEPTANCE.md), and [changelog](docs/WP10_CHANGELOG.md).
+
+## SCB API Ledger (separate from WP10 public release)
+A versioned API/source registry and a policy separating juridical form from SNI now exist under `config/api_ledger/`. Execute `python -m ideburen.api_ledger validate` or `python -m ideburen.api_ledger plan --out build/api_ledger/plan.json`. This is a **dry-run only**; SCB personal API-key access, the machine-readable v2 OpenAPI contract and any live row downloads are not configured. No secrets or raw register records are committed. See [API ledger](docs/API_LEDGER.md).

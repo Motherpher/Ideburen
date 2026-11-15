@@ -13,3 +13,5 @@
 - **WP10** **INTERNAL PILOT RELEASE CANDIDATE IMPLEMENTED; PUBLIC RELEASE BLOCKED**: v0.1.0-rc1 freezes source checksums, exact code commit, UTC timestamp and 17 municipality pilot slots (eight Uppsala report figures and nine Sörmland annex metadata rows belonging to one study). Sörmland values are NOT extracted and remain blank. No valid 2022 polygon geometry, QGIS map, original RefA completion, reuse/privacy clearance or Director release approval exists; no v0.1 tag or GitHub release created. See docs/WP10_ACCEPTANCE.md.
 
 Distinguish implemented code, verified evidence, sourced real geometry and Director-authorized publication.
+
+- **API Ledger v1 (post-WP10)**: registered the new SCB AFR v2 key-based API and separate SCB statistical API, juridical-form core/review/separate classification and nonexclusive SNI2025 flags, local-only audit event contracts, CI dry-run. The OpenAPI JSON content has **not** been parsed and there is no API key or live ingestion. WP09 release remains BLOCKED. See `docs/API_LEDGER.md`.
