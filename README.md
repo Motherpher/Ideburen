@@ -46,3 +46,6 @@ The read-only producer adapter exports FF-Spatial-normalized observation fields 
 
 ## WP09 Quality and Governance
 `python -m ideburen.governance audit --source-dir build --out build/wp09` generates a source-level HARP matrix and RAG QA report, passing only if technical integrity gates pass. `python -m ideburen.governance release-check --source-dir build --out build/wp09-release` **fails closed** while evidence, licensing, polygon/QGIS or Director approval gates are red. GitHub Actions publishes QA summaries only, **not** raw statistical files, original workbooks or maps. See [QA method](docs/WP09_GOVERNANCE.md), [RAG register](docs/WP09_RAG_REGISTER.md), and [acceptance](docs/WP09_ACCEPTANCE.md).
+
+## WP10 internal pilot candidate (not a public release)
+The reproducible v0.1.0-rc1 internal freeze validates Uppsala eight municipal 2022 observations and nine Sörmland 2023 municipal annex *metadata* entries, preserving blank/not-extracted figures. The frozen manifest pins exact Git revision and SHA-256 of inputs/outputs. GitHub Actions verifies the freeze but does not upload WP10 data, create a public tag, or authorize maps. See [WP10 method](docs/WP10_PILOT_RELEASE.md), [acceptance](docs/WP10_ACCEPTANCE.md), and [changelog](docs/WP10_CHANGELOG.md).
