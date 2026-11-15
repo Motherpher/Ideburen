@@ -17,6 +17,8 @@ jobs:
       - run: python -m ideburen.decision_engine --help
       - run: python -m ideburen.sources validate
       - run: python -m ideburen.statistics validate
+      - run: python -m ideburen.api_ledger validate
+      - run: python -m ideburen.api_ledger plan --out build/api_ledger/plan.json
       - run: python -m pytest -q
       - run: python -m ideburen.cli build --out build
       - run: python -m ideburen.statistics build --out build
